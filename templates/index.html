@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Similarity Checker</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+               max-width: 600px; margin: 40px auto; background-color: #f9f9f9; }
+        form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        textarea { width: 95%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; background: #e6f7ff; border: 1px solid #b3e0ff; border-radius: 4px; }
+        .result strong { font-size: 1.2em; color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h2>🤖 Semantic Similarity Checker</h2>
+    <p>
+        Enter two pieces of text. The app will convert each to an embedding vector
+        and calculate their "semantic similarity" (how similar they are in meaning).
+    </p>
+
+    <form action="/compare" method="POST">
+        <div>
+            <label for="text1">Text 1:</label><br>
+            <textarea name="text1" id="text1" rows="3">{{ text1 or '' }}</textarea>
+        </div>
+        <div>
+            <label for="text2">Text 2:</label><br>
+            <textarea name="text2" id="text2" rows="3">{{ text2 or '' }}</textarea>
+        </div>
+        <button type="submit">Compare</button>
+    </form>
+
+    {% if score is defined %}
+    <div class="result">
+        <strong>Similarity Score: {{ "%.2f"|format(score * 100) }}%</strong>
+        <p>(A score of 100% means the meanings are identical. 0% means they are completely unrelated.)</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
